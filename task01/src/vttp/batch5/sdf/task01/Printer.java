@@ -35,9 +35,9 @@ public class Printer {
         String holiday = HOLIDAY[e.isHoliday() ? 1 : 0];
 
         return String.format("""
-                             The %s recorded number of cyclists was in %s, on a %s in the month of %s.
-                             There were a total of %d cyclists. The weather was %s.
-                             %s was %s.""", 
+                             The %s (position) recorded number of cyclists was in %s (season), on a %s (day) in the month of %s (month).
+                             There were a total of %d (total) cyclists. The weather was %s (weather).
+                             %s (day) was %s.""", 
             position, season, day, month, total, weather, day, holiday);
     }
 
