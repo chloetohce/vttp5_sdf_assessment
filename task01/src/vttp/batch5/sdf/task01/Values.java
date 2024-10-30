@@ -8,6 +8,25 @@ public class Values {
         "Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog"
     };
     public static final String[] POSITION = {"highest", "second highest", "third highest",
-         "fourth highest", "fifth highest"};
+         "fourth highest", "fifth highest", "sixth highest", "seventh highest", "eighth highest",
+        "ninth highest", "tenth highest"};
     public static final String[] HOLIDAY = {"not a holiday", "a holiday"};
+
+    public static String toWeather(int weather) {
+        return switch (weather) {
+            case 1, 2, 3, 4 -> WEATHER[weather - 1];
+            default -> "invalid weather";
+        };
+    }
+
+    public static String toPosition(int pos) {
+        return switch (pos) {
+            case 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 -> POSITION[pos];
+            default -> "no position";
+        };
+    }
+
+    public static String toHoliday(boolean holiday) {
+        return HOLIDAY[holiday ? 1 : 0];
+    }
 }
