@@ -21,6 +21,15 @@ public class CSVReader {
 
         } catch (IOException e) {
             System.err.println("Error reading file.");
+            System.err.println("Exiting...");
+            System.exit(-1);
+        } catch (NumberFormatException e) {
+            System.err.println("Dataset contains unexpected arguments. ");
+            System.err.println("Exiting...");
+            System.exit(-1);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.err.println("Dataset does not contain the expected number of columns.");
+            System.err.println("Exiting...");
             System.exit(-1);
         }
         return data;
