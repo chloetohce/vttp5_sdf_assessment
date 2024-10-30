@@ -6,7 +6,7 @@ import vttp.batch5.sdf.task02.board.Board;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 		if (args.length == 0) {
 			System.err.println("No file input. ");
 			System.err.println("Usage: java -cp classes vttp.batch5.sdf.task02.Main <file path>");

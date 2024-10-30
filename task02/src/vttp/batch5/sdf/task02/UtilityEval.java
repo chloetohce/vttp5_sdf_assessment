@@ -5,7 +5,6 @@ import java.util.Map;
 import vttp.batch5.sdf.task02.board.*;
 
 public class UtilityEval {
-    private final Board board;
     private final Map<Space, Integer> utility;
     private static final int[][] WIN_INDICES = {
         {0, 1, 2}, {3, 4, 5}, {6, 7, 8},    // Horizontals
@@ -14,7 +13,6 @@ public class UtilityEval {
     };
 
     public UtilityEval(Board board) {
-        this.board = board;
         this.utility = evaluate(board);
     }
 
@@ -55,13 +53,15 @@ public class UtilityEval {
     }
 
     public void printUtility() {
-        System.out.println("Next player's move is: " + GameConstant.player);
-        System.out.println("Showing utility for " + GameConstant.player);
-        System.out.println("------------------------------------------------");
+        if (GameConstant.player.equals(GameConstant.PLAYER2)) {
+            System.out.println("Next player's move is: " + GameConstant.player);
+            System.out.println("Showing utility for " + GameConstant.player);
+            System.out.println("------------------------------------------------");
+        }
         for (Map.Entry<Space, Integer> e : utility.entrySet()) {
             Space s = e.getKey();
             int utilVal = e.getValue();
-            System.out.printf("y=%d, x=%d, utility=%d\n", s.getY(), s.getX(), utilVal);
+            System.out.printf("%s, utility=%d\n", s.toString(), utilVal);
         }
     }
 }

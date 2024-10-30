@@ -2,14 +2,13 @@ package vttp.batch5.sdf.task01;
 
 import java.io.Console;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import vttp.batch5.sdf.task01.models.BikeEntry;
 
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
 
 		File f = new File("day.csv");
 		if (args.length > 0) {

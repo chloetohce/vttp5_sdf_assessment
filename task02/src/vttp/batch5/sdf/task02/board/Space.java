@@ -33,4 +33,8 @@ public class Space {
         this.val = val;
     }
 
+    @Override
+    public String toString() {
+        return String.format("y=%d, x=%d", y, x);
+    }
 }

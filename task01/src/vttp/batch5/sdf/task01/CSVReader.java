@@ -10,15 +10,19 @@ import vttp.batch5.sdf.task01.models.BikeEntry;
 
 public class CSVReader {
     
-    public static List<BikeEntry> readFile(File f) throws IOException {
-        BufferedReader r = new BufferedReader(new FileReader(f)); // TO DO: Error handling here
-        String line = r.readLine();
+    public static List<BikeEntry> readFile(File f) {
         List<BikeEntry> data = new ArrayList<>();
-        while ((line = r.readLine()) != null) {
-            line = line.trim();
-            data.add(BikeEntry.toBikeEntry(line.split(",")));
+        try (BufferedReader r = new BufferedReader(new FileReader(f))) {
+            String line = r.readLine();
+            while ((line = r.readLine()) != null) {
+                line = line.trim();
+                data.add(BikeEntry.toBikeEntry(line.split(",")));
+            }
+
+        } catch (IOException e) {
+            System.err.println("Error reading file.");
+            System.exit(-1);
         }
-        r.close();
         return data;
     }
 

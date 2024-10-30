@@ -11,10 +11,8 @@ public class GameConstant {
 
     public static void setPlayer(String player) {
         GameConstant.player = player;
-        GameConstant.opp = player.equals("X") ? "O" : "X";
+        GameConstant.opp = player.equals(PLAYER1) ? PLAYER2 : PLAYER1;
     }
 
-    public static int calcIndex(int x, int y) {
-        return y * NUM_COL + x;
-    }
+    
 }

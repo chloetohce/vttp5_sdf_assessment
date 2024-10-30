@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import vttp.batch5.sdf.task02.GameConstant;
 
@@ -17,21 +18,21 @@ public class Board {
     }
 
     public static Board of(File f) throws IOException {
+        //Get and store all values from input file
         BufferedReader reader = new BufferedReader(new FileReader(f));
         String row = "";
         List<String> boardVal = new ArrayList<>();
         while ((row = reader.readLine()) != null) {
             String[] rowArr = row.split("");
-            for (int i = 0; i < rowArr.length; i++) {
-                boardVal.add(rowArr[i]);
-            }
+            boardVal.addAll(Arrays.asList(rowArr));
         }
         reader.close();
         
+        // Pass the values into the board
         List<Space> board = new ArrayList<>();
         for (int y = 0; y < GameConstant.NUM_ROW; y++) {
             for (int x = 0; x < GameConstant.NUM_COL; x++) {
-                int pos = GameConstant.calcIndex(x, y);
+                int pos = calcIndex(x, y);
                 board.add(new Space(x, y, boardVal.get(pos)));
             }
         }
@@ -61,7 +62,7 @@ public class Board {
     public void printBoard() {
         for (int y = 0; y < GameConstant.NUM_ROW; y++) {
             for (int x = 0; x < GameConstant.NUM_COL; x++) {
-                int pos = GameConstant.calcIndex(x, y);
+                int pos = calcIndex(x, y);
                 System.out.print(board.get(pos).getVal());
             }
             System.out.println();
@@ -81,17 +82,21 @@ public class Board {
 
     public void setMove(Space space, String value) {
         space.setVal(value);
-        int pos = GameConstant.calcIndex(space.getX(), space.getY());
+        int pos = calcIndex(space.getX(), space.getY());
         board.set(pos, space);
     }
 
     public void undoMove(Space space) {
-        space.setVal(".");
-        int pos = GameConstant.calcIndex(space.getX(), space.getY());
+        space.setVal(GameConstant.EMPTY);
+        int pos = calcIndex(space.getX(), space.getY());
         board.set(pos, space);
     }
 
     public String getSpaceVal(int index) {
         return board.get(index).getVal();
+    }
+
+    private static int calcIndex(int x, int y) {
+        return y * GameConstant.NUM_COL + x;
     }
 }
