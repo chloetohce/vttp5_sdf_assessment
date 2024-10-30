@@ -2,6 +2,7 @@ package vttp.batch5.sdf.task02;
 
 import java.io.File;
 import java.io.IOException;
+import vttp.batch5.sdf.task02.board.Board;
 
 public class Main {
 
@@ -23,7 +24,7 @@ public class Main {
 			b.printBoard();
 			
 			System.out.println();
-			System.out.println("------------------------------");
+			System.out.println("------------------------------------------------");
 			UtilityEval utility = new UtilityEval(b);
 			utility.printUtility();
 

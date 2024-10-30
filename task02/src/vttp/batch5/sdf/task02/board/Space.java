@@ -1,7 +1,8 @@
-package vttp.batch5.sdf.task02;
+package vttp.batch5.sdf.task02.board;
+
+import vttp.batch5.sdf.task02.GameConstant;
 
 public class Space {
-    private static final String EMPTY_SIGN = ".";
     private final int x;
     private final int y;
     private String val;
@@ -25,7 +26,7 @@ public class Space {
     }
 
     public boolean isEmpty() {
-        return val.equals(EMPTY_SIGN);
+        return val.equals(GameConstant.EMPTY);
     }
 
     public void setVal(String val) {

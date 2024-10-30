@@ -2,6 +2,7 @@ package vttp.batch5.sdf.task02;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
+import vttp.batch5.sdf.task02.board.*;
 
 public class UtilityEval {
     private final Board board;
@@ -19,11 +20,10 @@ public class UtilityEval {
 
     private static Map<Space, Integer> evaluate(Board board) {
         Map<Space, Integer> utility = new LinkedHashMap<>();
-        //String player = board.getNextPlayer();
         Board newBoard = Board.copy(board);
+
         for (Space s : board.getEmptySpaces()) {
-            newBoard.setMove(s, "X");
-            System.out.println(s.getX() + " " + s.getY());
+            newBoard.setMove(s, GameConstant.player);
             utility.put(s, calcUtility(newBoard));
             newBoard.undoMove(s);
         }
@@ -34,20 +34,20 @@ public class UtilityEval {
         int utilVal = Integer.MIN_VALUE;
         for (int[] combo : WIN_INDICES) {
 
-            // Counting the number of X and O
-            int numX = 0;
-            int numO = 0;
+            // Counting the number of player vs opp
+            int numPlayer = 0;
+            int numOpp = 0;
             for (int pos : combo) {
-                if (b.getSpaceVal(pos).equals("X")) {
-                    numX++;
-                } else if (b.getSpaceVal(pos).equals("O")){
-                    numO++;
+                if (b.getSpaceVal(pos).equals(GameConstant.player)) {
+                    numPlayer++;
+                } else if (b.getSpaceVal(pos).equals(GameConstant.opp)){
+                    numOpp++;
                 }
             }
             //Getting utility
-            if (numX == 3) {
+            if (numPlayer == 3) {
                 utilVal = Math.max(utilVal, 1);
-            } else if (numO == 2 && numX != 1) {
+            } else if (numOpp == 2 && numPlayer != 1) {
                 utilVal = Math.max(utilVal, -1);
             }
         }
@@ -55,6 +55,9 @@ public class UtilityEval {
     }
 
     public void printUtility() {
+        System.out.println("Next player's move is: " + GameConstant.player);
+        System.out.println("Showing utility for " + GameConstant.player);
+        System.out.println("------------------------------------------------");
         for (Map.Entry<Space, Integer> e : utility.entrySet()) {
             Space s = e.getKey();
             int utilVal = e.getValue();

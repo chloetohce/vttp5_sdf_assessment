@@ -1,4 +1,4 @@
-package vttp.batch5.sdf.task02;
+package vttp.batch5.sdf.task02.board;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -6,15 +6,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import vttp.batch5.sdf.task02.GameConstant;
 
 public class Board {
-    private static final int NUM_ROW = 3;
-    private static final int NUM_COL = 3;
-    private static final int NUM_SPACES = NUM_COL * NUM_ROW;
     private final List<Space> board;
 
     private Board(List<Space> board) {
         this.board = board;
+        GameConstant.setPlayer(this.getNextPlayer());
     }
 
     public static Board of(File f) throws IOException {
@@ -28,46 +27,47 @@ public class Board {
             }
         }
         reader.close();
-
+        
         List<Space> board = new ArrayList<>();
-        for (int y = 0; y < NUM_ROW; y++) {
-            for (int x = 0; x < NUM_COL; x++) {
-                int pos = y * NUM_COL + x;
+        for (int y = 0; y < GameConstant.NUM_ROW; y++) {
+            for (int x = 0; x < GameConstant.NUM_COL; x++) {
+                int pos = GameConstant.calcIndex(x, y);
                 board.add(new Space(x, y, boardVal.get(pos)));
             }
         }
-
+        
         return new Board(board);
     }
-
+    
     public static Board copy(Board other) {
         return new Board(other.board);
     }
+    
+    private String getNextPlayer() {
+        // Checks how many X's and O's are on the board and returns the next player
+        // Assumes that X always goes first
+        int num1 = 0;
+        int num2 = 0;
+        for (Space s : board) {
+            if (s.getVal().equals(GameConstant.PLAYER1)) {
+                num1++;
+            } else if (s.getVal().equals(GameConstant.PLAYER2)) {
+                num2++;
+            }
+        }
+        return num1 - num2 > 0 ? GameConstant.PLAYER2 : GameConstant.PLAYER1;
+    }
 
     public void printBoard() {
-        for (int y = 0; y < NUM_ROW; y++) {
-            for (int x = 0; x < NUM_COL; x++) {
-                int pos = y * NUM_COL + x;
+        for (int y = 0; y < GameConstant.NUM_ROW; y++) {
+            for (int x = 0; x < GameConstant.NUM_COL; x++) {
+                int pos = GameConstant.calcIndex(x, y);
                 System.out.print(board.get(pos).getVal());
             }
             System.out.println();
         }
     }
 
-    public String getNextPlayer() {
-        // Checks how many X's and O's are on the board and returns the next player
-        // Assumes that X always goes first
-        int numX = 0;
-        int numO = 0;
-        for (Space s : board) {
-            if (s.getVal().equals("X")) {
-                numX++;
-            } else if (s.getVal().equals("O")) {
-                numO++;
-            }
-        }
-        return numX - numO >= 0 ? "X" : "O";
-    }
 
     public List<Space> getEmptySpaces() {
         List<Space> emptySpaces = new ArrayList<>();
@@ -81,13 +81,13 @@ public class Board {
 
     public void setMove(Space space, String value) {
         space.setVal(value);
-        int pos = space.getY() * NUM_COL + space.getX();
+        int pos = GameConstant.calcIndex(space.getX(), space.getY());
         board.set(pos, space);
     }
 
     public void undoMove(Space space) {
         space.setVal(".");
-        int pos = space.getY() * NUM_COL + space.getX();
+        int pos = GameConstant.calcIndex(space.getX(), space.getY());
         board.set(pos, space);
     }
 
