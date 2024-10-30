@@ -11,13 +11,11 @@ public class Main {
 
 	public static void main(String[] args) throws IOException {
 
-		if (args.length == 0) {
-			System.err.println("No file name provided. Please provide a file name");
-			System.err.println("Usage: java -cp classes vttp.batch5.sdf.task01.Main day.csv");
-			System.exit(-1);
+		File f = new File("day.csv");
+		if (args.length > 0) {
+			f = new File(args[0]);
 		}
 
-		File f = new File(args[0]);
 		Console cons = System.console();
 		while (!f.exists()) {
 			System.out.println("File does not exist. ");
