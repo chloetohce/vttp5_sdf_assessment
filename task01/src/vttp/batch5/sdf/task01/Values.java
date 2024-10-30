@@ -45,14 +45,14 @@ public class Values {
 
     public static String toSeason(int season) {
         return switch (season) {
-            case 1, 2, 3, 4 -> DAY[season - 1];
+            case 1, 2, 3, 4 -> SEASON[season - 1];
             default -> "invalid season";
         };
     }
 
     public static String toMonth(int month) {
         return switch (month) {
-            case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 -> DAY[month - 1];
+            case 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 -> MONTH[month - 1];
             default -> "invalid month";
         };
     }
