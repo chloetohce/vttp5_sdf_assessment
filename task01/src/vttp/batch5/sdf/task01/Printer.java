@@ -19,9 +19,9 @@ public class Printer {
 
     private boolean isValidArg(String position, String season, String day, String month, String weather) {
         List<String> positionList = Arrays.asList(Values.POSITION);
-        List<String> seasonList = Arrays.asList(Utilities.SEASON);
-        List<String> dayList = Arrays.asList(Utilities.DAY);
-        List<String> monthList = Arrays.asList(Utilities.MONTH);
+        List<String> seasonList = Arrays.asList(Values.SEASON);
+        List<String> dayList = Arrays.asList(Values.DAY);
+        List<String> monthList = Arrays.asList(Values.MONTH);
         List<String> weatherList = Arrays.asList(Values.WEATHER);
 
         return positionList.contains(position)
@@ -36,9 +36,9 @@ public class Printer {
             BikeEntry e = data.get(pos);
 
             String position = Values.toPosition(pos);
-            String season = Utilities.toSeason(e.getSeason());
-            String day = Utilities.toWeekday(e.getWeekday());
-            String month = Utilities.toMonth(e.getMonth());
+            String season = Values.toSeason(e.getSeason());
+            String day = Values.toWeekday(e.getWeekday()); // TODO: Utilities.toWeekday() mapping int -> weekday is wrong. 6 -> Saturday, not Friday
+            String month = Values.toMonth(e.getMonth());
             int total = e.getCasual() + e.getRegistered();
             String weather = Values.toWeather(e.getWeather());
             String holiday = Values.toHoliday(e.isHoliday());
@@ -46,7 +46,8 @@ public class Printer {
             if (!isValidArg(position, season, day, month, weather)) {
                 System.out.println("Invalid arguments found in dataset");
                 System.out.println("Data entry with issue is: ");
-                System.out.printf("""
+                System.out.printf(
+                    """
                         Position: %s
                         Season: %s
                         Day: %s
@@ -54,7 +55,8 @@ public class Printer {
                         Total: %s
                         Weather: %s
                         Holiday: %s
-                        """, position, season, day, holiday, month, total, weather, holiday);
+                        """, 
+                    position, season, day, holiday, month, total, weather, holiday);
                 break;
             }
 
